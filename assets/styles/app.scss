@@ -1,3 +1,45 @@
+@import "~bootstrap/scss/bootstrap";
+
+a {
+    text-decoration: none;
+    color: black !important;
+}
+
 body {
-    background-color: skyblue;
+    background-color: floralwhite;
+}
+
+/* public/css/cart.css */
+.cart-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.cart-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.cart-total {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 20px;
 }
