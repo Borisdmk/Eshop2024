@@ -13,6 +13,7 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'fabrice' => 'Hey voici ma variable de vue Fabrice',
         ]);
     }
 }
