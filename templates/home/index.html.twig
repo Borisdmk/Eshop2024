@@ -1,9 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Hello HomeController!
+{% endblock %}
 
 {% block body %}
 
-    {{ fabrice }}
+	{{'msg_acceuil'|trans}}
 
-{% endblock %}
+	<div class="row p-5">
+
+		<ul class="list-group col-4">
+
+			{% for category in categories %}
+
+				<li class="list-group-item">
+					<a href="{{ path('app_get_product_by_category', {id_category : category.id}) }}">
+						{{category.title}}
+					</a>
+				</li>
+
+			{% endfor %}
+		</ul>
+
+
+		<div class="col-8 border">
+
+		{# ASYCHROME je veux que avec le select je puisse faire un choix sans recharger la page
+		javascript qui communique avec php en passant par asychrome #}
+
+			{# <form>
+				<select class="form-select" id="filter" name="filter">
+					<option value="ASC"> Par date croissant </option>
+					<option value="DESC"> Par date décroissant </option>
+				</select>
+			</form> #}
+
+
+{% for product in products %}
+    <div class="col-md-12" id="list-products">
+        <a href="{{ path('app_product_show', {id : product.id })}}">
+            <div class="product d-flex p-3">
+                {% if product.picture is empty %}
+                    <img class="col-md-4" src="{{ asset('/uploads/products/default.jpg') }}" alt="{{product.title}}" title="{{product.title}}">
+                {% else %}
+                    <img class="col-md-4" src="{{ asset('/uploads/products/' ~ product.picture) }}" alt="{{product.title}}" title="{{product.title}}">
+                {% endif %}
+                <div class="d-flex flex-column ms-3">
+                    <h3>
+                        {{product.title}}
+                    </h3>
+                    <p>
+                        {{product.description}}
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+{% endfor %}
+		</div>
+
+			<div class="navigation">
+				{{ knp_pagination_render(products) }}
+			</div>
+
+
+		{% endblock %}

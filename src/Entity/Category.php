@@ -90,4 +90,12 @@ class Category
 
         return $this;
     }
+
+    // on crée cette fct manuellement car sinon dans le formulaire de modification d'article
+    // la categorie s'affiche en id car c'est une entité, on veut afficher uniquement son title
+    // comment on transforme l'objet en string
+    // je veux qu'il me retourne le titre 
+    public function __toString() {
+        return $this->title;
+    }    
 }
