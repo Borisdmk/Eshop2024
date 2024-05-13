@@ -1,20 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block title %}Liste des produits{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Liste des produits</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Prix</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.description }}</td>
+                    <td><img src="{{ asset('/uploads/products/' ~ product.picture) }}" alt="{{ product.title }}" style="max-width: 100px;"></td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>
+                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-info">Voir</a>
+                        {# Ajouter d'autres actions si nécessaire, comme éditer ou supprimer #}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Aucun produit trouvé</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/wamp64/www/Eshop2024/src/Controller/ProductController.php</code></li>
-        <li>Your template at <code>D:/wamp64/www/Eshop2024/templates/product/index.html.twig</code></li>
-    </ul>
-</div>
+    {# Ajouter un lien pour créer un nouveau produit si nécessaire #}
+    {# <a href="{{ path('app_product_new') }}" class="btn btn-primary">Créer un nouveau produit</a> #}
 {% endblock %}
