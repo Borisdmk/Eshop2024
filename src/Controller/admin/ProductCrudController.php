@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -30,6 +31,7 @@ class ProductCrudController extends AbstractCrudController
             ->setUploadedFileNamePattern('[slug]-[contenthash].[extension]')
             ->setRequired(false),
             TextField::new('price'),
+            AssociationField::new('category'),
             IntegerField::new('stock'),
             
         ];

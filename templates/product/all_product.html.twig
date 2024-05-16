@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les produits{% endblock %}
+
+{% block body %}
+    <h1>Tous les produits</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Catégories</h2>
+            <ul class="list-group">
+                {% for category in categories %}
+                    <li class="list-group-item">
+                        <a href="{{ path('app_get_product_by_category', {id_category : category.id}) }}">
+                            {{ category.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <h2>Liste de produits</h2>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.title }}</h5>
+                                <p class="card-text">{{ product.description }}</p>
+                                <a href="{{ path('app_product_show', {id : product.id })}}" class="btn btn-primary">Voir</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
