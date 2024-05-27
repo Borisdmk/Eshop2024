@@ -55,3 +55,52 @@ th {
     text-align: right;
     font-size: 20px;
 }
+
+.custom-margin {
+    margin-bottom: 50px;
+}
+
+
+.card {
+    border: none; /* Remove the default border */
+    border-radius: 10px; /* Round the corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions for hover effects */
+    
+    &:hover {
+        transform: translateY(-10px); /* Lift the card slightly on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance the shadow on hover */
+    }
+    
+    .card-img-top {
+        border-top-left-radius: 10px; /* Round the top left corner of the image */
+        border-top-right-radius: 10px; /* Round the top right corner of the image */
+    }
+    
+    .card-body {
+        text-align: center; /* Center the text */
+        padding: 20px; /* Add some padding */
+    }
+    
+    .card-title {
+        font-family: $headings-font-family;
+        font-size: 1.25rem; /* Increase the title size */
+        margin-bottom: 0.75rem; /* Add space below the title */
+    }
+    
+    .card-text {
+        font-family: $font-family-base;
+        color: #6c757d; /* Use a softer text color */
+        margin-bottom: 1rem; /* Add space below the text */
+    }
+    
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s;
+        
+        &:hover {
+            color: #007bff; /* Change color on hover */
+        }
+    }
+}
