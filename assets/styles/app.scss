@@ -1,106 +1,133 @@
+/* Importation des styles Bootstrap */
 @import "~bootstrap/scss/bootstrap";
 
-// Import Google Fonts
+// Importation des Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-// Définir les polices de base
+// Définition des polices de base
 $font-family-base: 'Lora', serif;
 $headings-font-family: 'Montserrat', sans-serif;
 
+// Stylisation des liens
 a {
-    text-decoration: none;
-    color: black !important;
+    text-decoration: none; /* Suppression du soulignement */
+    color: black !important; /* Couleur du texte */
 }
 
+// Stylisation du corps de la page
 body {
-    background-color: white;
-    font-family: $font-family-base;
+    background-color: white; /* Couleur de fond */
+    font-family: $font-family-base; /* Police de caractères */
 }
 
+// Stylisation des titres
 h1, h2, h3, h4, h5, h6 {
-    font-family: $headings-font-family;
+    font-family: $headings-font-family; /* Police de caractères */
 }
 
-/* public/css/cart.css */
+/* Fichier public/css/cart.css */
 .cart-container {
-    width: 80%;
-    margin: 0 auto;
+    width: 80%; /* Largeur du conteneur */
+    margin: 0 auto; /* Mise au centre horizontale */
 }
 
 .cart-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: center; /* Centrage du texte */
+    margin-bottom: 20px; /* Espacement inférieur */
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 100%; /* Largeur de la table */
+    border-collapse: collapse; /* Fusion des bordures de cellules */
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Bordures de la table */
 }
 
 th, td {
-    text-align: left;
-    padding: 8px;
+    text-align: left; /* Alignement du texte à gauche */
+    padding: 8px; /* Espacement interne */
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2; /* Couleur de fond des en-têtes */
 }
 
 .cart-total {
-    margin-top: 20px;
-    text-align: right;
-    font-size: 20px;
+    margin-top: 20px; /* Espacement supérieur */
+    text-align: right; /* Alignement du texte à droite */
+    font-size: 20px; /* Taille de la police */
 }
 
 .custom-margin {
-    margin-bottom: 50px;
+    margin-bottom: 50px; /* Espacement inférieur */
 }
 
-
+// Stylisation des cartes de produits
 .card {
-    border: none; /* Remove the default border */
-    border-radius: 10px; /* Round the corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions for hover effects */
+    border: none; /* Suppression de la bordure par défaut */
+    border-radius: 10px; /* Arrondissement des coins */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajout d'une ombre */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transition fluide */
     
     &:hover {
-        transform: translateY(-10px); /* Lift the card slightly on hover */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance the shadow on hover */
+        transform: translateY(-10px); /* Effet de levitation au survol */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Renforcement de l'ombre */
     }
     
     .card-img-top {
-        border-top-left-radius: 10px; /* Round the top left corner of the image */
-        border-top-right-radius: 10px; /* Round the top right corner of the image */
+        border-top-left-radius: 10px; /* Arrondissement coin supérieur gauche de l'image */
+        border-top-right-radius: 10px; /* Arrondissement coin supérieur droit de l'image */
     }
     
     .card-body {
-        text-align: center; /* Center the text */
-        padding: 20px; /* Add some padding */
+        text-align: center; /* Centrage du texte */
+        padding: 20px; /* Espacement interne */
     }
     
     .card-title {
-        font-family: $headings-font-family;
-        font-size: 1.25rem; /* Increase the title size */
-        margin-bottom: 0.75rem; /* Add space below the title */
+        font-family: $headings-font-family; /* Police de caractères */
+        font-size: 1.25rem; /* Taille de la police */
+        margin-bottom: 0.75rem; /* Espacement inférieur */
     }
     
     .card-text {
-        font-family: $font-family-base;
-        color: #6c757d; /* Use a softer text color */
-        margin-bottom: 1rem; /* Add space below the text */
+        font-family: $font-family-base; /* Police de caractères */
+        color: #6c757d; /* Couleur du texte */
+        margin-bottom: 1rem; /* Espacement inférieur */
     }
     
     .card-link {
-        text-decoration: none;
-        color: inherit;
-        transition: color 0.3s;
+        text-decoration: none; /* Suppression du soulignement */
+        color: inherit; /* Couleur par défaut */
+        transition: color 0.3s; /* Transition fluide */
         
         &:hover {
-            color: #007bff; /* Change color on hover */
+            color: #007bff; /* Changement de couleur au survol */
+        }
+    }
+}
+
+/* Stylisation des catégories */
+.list-group-item {
+    border: none; /* Suppression de la bordure par défaut */
+    border-radius: 10px; /* Arrondissement des coins */
+    background-color: #f8f9fa; /* Couleur de fond */
+    padding: 10px 15px; /* Espacement interne */
+    margin-bottom: 10px; /* Espacement inférieur */
+    transition: background-color 0.3s; /* Transition de couleur de fond */
+    
+    &:hover {
+        background-color: #e9ecef; /* Changement de couleur de fond au survol */
+    }
+    
+    a {
+        text-decoration: none; /* Suppression du soulignement du lien */
+        color: #212529; /* Couleur du texte */
+        
+        &:hover {
+            color: #212529; /* Couleur du texte au survol */
         }
     }
 }
