@@ -8,6 +8,30 @@
 $font-family-base: 'Lora', serif;
 $headings-font-family: 'Montserrat', sans-serif;
 
+
+// NAVIGATION 
+
+.nav-link {
+    color: black !important; /* Couleur du texte par défaut */
+    transition: transform 0.3s; /* Transition fluide */
+}
+
+.nav-link:hover {
+    transform: scale(1.1); /* Zoom au survol */
+}
+
+.btn-outline-success {
+    background-color: white; /* Fond blanc */
+    border-color: #ff66c4; /* Bordure rose */
+    color: #ff66c4; /* Texte rose */
+}
+
+.btn-outline-success:hover {
+    background-color: #ff66c4; /* Fond rose au survol */
+    color: white; /* Texte blanc au survol */
+}
+
+
 // Stylisation des liens
 a {
     text-decoration: none; /* Suppression du soulignement */
@@ -129,5 +153,34 @@ th {
         &:hover {
             color: #212529; /* Couleur du texte au survol */
         }
+    }
+}
+
+
+// Formulaire contact
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    &:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #0056b3;
+        box-shadow: 0 0 10px rgba(0, 86, 179, 0.5);
     }
 }
