@@ -3,115 +3,110 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderDetail;
 use App\Entity\OrderDetails;
 use App\Entity\Product;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
 {
+
+
+
     #[Route('/cart', name: 'app_cart')]
     public function index(Request $request): Response
     {
-        $session = $request->getSession();
-        $cart = $session->get('cart', []);
 
-        $cartTotal = array_reduce($cart, function ($total, $item) {
-            return $total + $item['price'] * $item['quantity'];
-        }, 0);
+        $session = $request->getSession();
+
+        $carTotal = 0;
+
+        if(!is_null($session->get('cart')) && count($session->get('cart')) > 0) {
+            for($i = 0; $i < count($session->get('cart')["id"]); $i++) {
+                $carTotal += (float) $session->get('cart')["price"][$i] * $session->get('cart')["stock"][$i];
+            }
+        }   
 
         return $this->render('cart/index.html.twig', [
-            'cartItems' => $cart,
-            'cartTotal' => $cartTotal,
+            'cartItems' => $session->get('cart'),
+            'cartTotal' => $carTotal,
         ]);
     }
+    
+   
 
-    #[Route('/cart/add/{id}', name: 'app_cart_add', methods: ['POST'])]
-    public function addProduct(Request $request, ProductRepository $productRepository, int $id): Response
+
+    #[Route('/cart/{idProduct}', name: 'app_cart_add', methods: ['POST'])]
+    public function addProduct(Request $request, ProductRepository $productRepository, int $idProduct): Response
     {
+
+        // créer la session
         $session = $request->getSession();
-        $cart = $session->get('cart', []);
+        // $cart = $session->get('cart', []); // permet de videt la session et d'en relancer une
 
-        $product = $productRepository->find($id);
-
-        if ($product) {
-            $cartItem = [
-                'id' => $product->getId(),
-                'title' => $product->getTitle(),
-                'description' => $product->getDescription(),
-                'picture' => $product->getPicture(),
-                'price' => $product->getPrice(),
-                'quantity' => 1,
-            ];
-
-            // Vérifier si le produit est déjà dans le panier
-            $found = false;
-            foreach ($cart as &$item) {
-                if ($item['id'] === $product->getId()) {
-                    $item['quantity'] += 1;
-                    $found = true;
-                    break;
-                }
-            }
-
-            if (!$found) {
-                $cart[] = $cartItem;
-            }
+        //si la session existe pas je la crée
+        if(!$session->get('cart')) {
+            $session->set('cart', [
+                "id" => [],
+                "title" => [],
+                "description" => [],
+                "picture" => [],
+                "price" => [],
+                "stock" => [],
+                "priceIdStripe" => [],
+            ]);
         }
+
+        $cart = $session->get('cart');
+
+        // ajouter le produit au panier
+        // recupérer les infos du produit en BDD et l'ajouter a mon panier
+        $product = $productRepository->find($idProduct);
+        $cart["id"][] = $product->getId();
+        $cart["title"][] = $product->getTitle();
+        $cart["description"][] = $product->getDescription();
+        $cart["picture"][] = $product->getPicture();
+        $cart["price"][] = $product->getPrice();
+        $cart["stock"][] = 1;
+        $cart["priceIdStripe"][] = $product->getPriceIdStripe();
 
         $session->set('cart', $cart);
 
-        return $this->redirectToRoute('app_cart');
+        
+        // calculer le montant total de mon panier
+        $cartTotal = 0;
+
+        for($i = 0; $i < count($session->get('cart')['id']); $i++) {
+            $cartTotal += (float) $session->get('cart')["price"][$i] * $session->get('cart')["stock"][$i];
+        }
+
+        // afficher la page panier
+
+        return $this->render('cart/index.html.twig', [
+            'cartItems' => $session->get('cart'),
+            'cartTotal' => $cartTotal,
+        ]);
     }
 
     #[Route('/cart/delete', name: 'app_cart_delete', methods: ['GET'])]
     public function deleteCart(Request $request): Response
     {
+
         $session = $request->getSession();
-        $session->remove('cart');
+        $session->set('cart', []);
 
         return $this->redirectToRoute('app_cart');
-    }
 
-    #[Route('/cart/checkout', name: 'app_cart_checkout', methods: ['POST'])]
-    public function checkout(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $session = $request->getSession();
-        $cart = $session->get('cart', []);
-
-        if (!$cart) {
-            return $this->redirectToRoute('app_cart');
-        }
-
-        $order = new Order();
-        $order->setUser($this->getUser());
-        $order->setDate(new \DateTime());
-        $order->setStatus('pending');
-        $order->setPdf(false);
-
-        $total = 0;
-
-        foreach ($cart as $item) {
-            $orderDetail = new OrderDetails();
-            $orderDetail->setIdOrder($order);
-            $orderDetail->setProduct($entityManager->getRepository(Product::class)->find($item['id']));
-            $orderDetail->setQuantity($item['quantity']);
-
-            $entityManager->persist($orderDetail);
-
-            $total += $item['price'] * $item['quantity'];
-        }
-
-        $order->setTotal($total);
-        $entityManager->persist($order);
-        $entityManager->flush();
-
-        $session->remove('cart');
-
-        return $this->redirectToRoute('app_cart');
     }
 }
+
+    
+
+    

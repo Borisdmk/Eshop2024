@@ -11,6 +11,10 @@ $headings-font-family: 'Montserrat', sans-serif;
 
 // NAVIGATION 
 
+.navbar {
+    background-color: #f8f9fab6; /* Gris très clair pour la navigation */
+}
+
 .nav-link {
     color: black !important; /* Couleur du texte par défaut */
     transition: transform 0.3s; /* Transition fluide */
@@ -20,16 +24,21 @@ $headings-font-family: 'Montserrat', sans-serif;
     transform: scale(1.1); /* Zoom au survol */
 }
 
-.btn-outline-success {
+.btn-outline-success-nav {
     background-color: white; /* Fond blanc */
     border-color: #ff66c4; /* Bordure rose */
     color: #ff66c4; /* Texte rose */
 }
 
-.btn-outline-success:hover {
+.btn-outline-success-nav:hover {
     background-color: #ff66c4; /* Fond rose au survol */
     color: white; /* Texte blanc au survol */
 }
+
+
+
+
+
 
 
 // Stylisation des liens
@@ -40,7 +49,7 @@ a {
 
 // Stylisation du corps de la page
 body {
-    background-color: white; /* Couleur de fond */
+    background-color: #f8f9fab6; /* Couleur de fond */
     font-family: $font-family-base; /* Police de caractères */
 }
 
