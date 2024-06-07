@@ -23,33 +23,33 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, ImageService $imageService): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
+    // #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager, ImageService $imageService): Response
+    // {
+    //     $product = new Product();
+    //     $form = $this->createForm(ProductType::class, $product);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+    //     if ($form->isSubmitted() && $form->isValid()) {
 
-            $fileName = $imageService->copyImage("picture", $this->getParameter("article_picture_directory"), $form);
-            $product->setPicture($fileName);
-            $entityManager->persist($product);
-            $entityManager->flush();
+    //         $fileName = $imageService->copyImage("picture", $this->getParameter("article_picture_directory"), $form);
+    //         $product->setPicture($fileName);
+    //         $entityManager->persist($product);
+    //         $entityManager->flush();
 
-            $this->addFlash(
-                'succes',
-                'Votre produit a bien été ajouté'
-            );
+    //         $this->addFlash(
+    //             'succes',
+    //             'Votre produit a bien été ajouté'
+    //         );
 
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('product/new.html.twig', [
+    //         'product' => $product,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product, Request $request, EntityManagerInterface $entityManager): Response
@@ -79,16 +79,16 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
-    public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($product);
-            $entityManager->flush();
-        }
+    // #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    // public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+    //         $entityManager->remove($product);
+    //         $entityManager->flush();
+    //     }
 
-        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    // }
 
     #[Route('/category/{id_category}', name: 'app_get_product_by_category', methods: ['GET'])]
     public function getProductByCategory(EntityManagerInterface $entityManager, int $id_category): Response

@@ -19,9 +19,9 @@
             <p><strong>Prix:</strong> {{ product.price }}</p>
             <p><strong>Stock:</strong> {{ product.stock }}</p>
             {# Bouton Ajouter au panier #}
-            {# <form action="{{ path('app_cart_add', {'id': product.id}) }}" method="POST">
+            <form action="{{ path('app_cart_add', {'idProduct': product.id}) }}" method="POST">
                 <button type="submit" class="btn btn-outline-success">Ajouter au panier</button>
-            </form> #}
+            </form>
         </div>
     </div>
 {% endblock %}

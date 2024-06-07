@@ -60,7 +60,7 @@ class CartController extends AbstractController
                 "picture" => [],
                 "price" => [],
                 "stock" => [],
-                "priceIdStripe" => [],
+                // "priceIdStripe" => [],  A FAIRE PAYEMENT
             ]);
         }
 
@@ -75,7 +75,7 @@ class CartController extends AbstractController
         $cart["picture"][] = $product->getPicture();
         $cart["price"][] = $product->getPrice();
         $cart["stock"][] = 1;
-        $cart["priceIdStripe"][] = $product->getPriceIdStripe();
+        // $cart["priceIdStripe"][] = $product->getPriceIdStripe();  A FAIRE PAYEMENT
 
         $session->set('cart', $cart);
 
@@ -106,7 +106,4 @@ class CartController extends AbstractController
 
     }
 }
-
-    
-
     

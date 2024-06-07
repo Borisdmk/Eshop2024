@@ -76,9 +76,10 @@ th {
             Total: <span>{{ cartTotal }} €</span>
         </div>
 
-        <form action="{{path('app_stripe_checkout')}}" method="POST">
+        {# PAYEMENT A FAIRE !!!!!!!!!!! #}
+        {# <form action="{{path('app_stripe_checkout')}}" method="POST">
             <input type="submit" name="payer" value="Pay" class="btn btn-outline-secondary">
-        </form>
+        </form> #}
 
         <a href="{{path('app_cart_delete')}}" class="btn btn-warning"> Vider le panier </a>
     {% else %}

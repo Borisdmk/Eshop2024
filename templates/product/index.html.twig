@@ -5,40 +5,25 @@
 {% block body %}
     <h1>Liste des produits</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-                <tr>
-                    <td>{{ product.id }}</td>
-                    <td>{{ product.title }}</td>
-                    <td>{{ product.description }}</td>
-                    <td><img src="{{ asset('/uploads/products/' ~ product.picture) }}" alt="{{ product.title }}" style="max-width: 100px;"></td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.stock }}</td>
-                    <td>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text">Prix: {{ product.price }}</p>
+                        <p class="card-text">Stock: {{ product.stock }}</p>
                         <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-info">Voir</a>
-                        {# Ajouter d'autres actions si nécessaire, comme éditer ou supprimer #}
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="7">Aucun produit trouvé</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    {# Ajouter un lien pour créer un nouveau produit si nécessaire #}
-    {# <a href="{{ path('app_product_new') }}" class="btn btn-primary">Créer un nouveau produit</a> #}
+                        {# Ajoutez le bouton Ajouter au panier ici si nécessaire #}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                <p>Aucun produit trouvé.</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
