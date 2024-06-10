@@ -1,29 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des produits{% endblock %}
+{% block title %}Liste des produits
+{% endblock %}
 
 {% block body %}
-    <h1>Liste des produits</h1>
+	<h1>Liste des produits</h1>
 
-    <div class="row">
-        {% for product in products %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.title }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <p class="card-text">Prix: {{ product.price }}</p>
-                        <p class="card-text">Stock: {{ product.stock }}</p>
-                        <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-info">Voir</a>
-                        {# Ajoutez le bouton Ajouter au panier ici si nécessaire #}
-                    </div>
-                </div>
-            </div>
-        {% else %}
-            <div class="col-md-12">
-                <p>Aucun produit trouvé.</p>
-            </div>
-        {% endfor %}
-    </div>
+	<div class="row">
+		{% for product in products %}
+			<div class="col-md-4 mb-4">
+				<div class="card">
+					<img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
+					<div class="card-body">
+						<h5 class="card-title">{{ product.title }}</h5>
+						<p class="card-text">{{ product.description }}</p>
+						<p class="card-text">Prix:
+							{{ product.price }}</p>
+						<p class="card-text">Stock:
+							{{ product.stock }}</p>
+						<a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-info">Voir</a>
+						{# Ajoutez le bouton Ajouter au panier ici si nécessaire #}
+						<form action="{{ path('app_cart_add', {'idProduct': product.id}) }}" method="POST">
+							<button type="submit" class="btn btn-outline-success">Ajouter au panier</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="col-md-12">
+				<p>Aucun produit trouvé.</p>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}
