@@ -26,7 +26,7 @@ $headings-font-family: 'Montserrat', sans-serif;
 
 .btn-outline-success-nav {
     background-color: white; /* Fond blanc */
-    border-color: #ff66c4; /* Bordure rose */
+    border-color: rgb(255, 102, 196); /* Bordure rose */
     color: #ff66c4; /* Texte rose */
 }
 
@@ -38,9 +38,15 @@ $headings-font-family: 'Montserrat', sans-serif;
 
 
 // Footer
+
+// .footer {
+//     margin-top: 40px; /* Ajouter une marge supérieure pour descendre le footer */
+// }
+
 .footer ul li {
-    margin-bottom: 15px; /* Espacement entre les éléments de la liste */
+    // margin-bottom: 15px; /* Espacement entre les éléments de la liste */
     list-style: none; 
+    margin-top: 40px;
 }
 
 .footer ul li a.nav-link {
@@ -67,7 +73,7 @@ a {
 
 // Stylisation du corps de la page
 body {
-    background-color: #f8f9fab6; /* Couleur de fond */
+    background-color: #FFF0F5; /* Couleur de fond */
     font-family: $font-family-base; /* Police de caractères */
 }
 
