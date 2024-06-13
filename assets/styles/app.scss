@@ -35,44 +35,24 @@ $headings-font-family: 'Montserrat', sans-serif;
     color: white; /* Texte blanc au survol */
 }
 
+
+
 // Footer
-.footer {
-    background-color: #f8f9fab6; /* Couleur de fond */
-    padding: 40px 0; /* Espacement interne */
-}
-
-.footer ul {
-    list-style: none; /* Suppression des puces de liste */
-    padding: 0; /* Suppression du remplissage */
-}
-
 .footer ul li {
     margin-bottom: 15px; /* Espacement entre les éléments de la liste */
+    list-style: none; 
 }
 
-.footer ul li a {
+.footer ul li a.nav-link {
     color: black; /* Couleur du texte */
     text-decoration: none; /* Suppression du soulignement */
     transition: transform 0.3s; /* Transition fluide */
+    display: inline-block; /* Assurez-vous que les liens restent en ligne */
+    padding-right: 10px; /* Ajoute un padding droit pour l'espace */
 }
 
-.footer ul li a:hover {
+.footer ul li a.nav-link:hover {
     transform: scale(1.1); /* Zoom au survol */
-}
-
-.footer .navbar-brand img {
-    max-width: 100px; /* Largeur maximale du logo */
-}
-
-.footer .btn-outline-success-nav {
-    background-color: white; /* Fond blanc */
-    border-color: #ff66c4; /* Bordure rose */
-    color: #ff66c4; /* Texte rose */
-}
-
-.footer .btn-outline-success-nav:hover {
-    background-color: #ff66c4; /* Fond rose au survol */
-    color: white; /* Texte blanc au survol */
 }
 
 
