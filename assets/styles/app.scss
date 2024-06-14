@@ -35,6 +35,29 @@ $headings-font-family: 'Montserrat', sans-serif;
     color: white; /* Texte blanc au survol */
 }
 
+// CAROUSEL 
+
+.carousel-container {
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 50px; // Ajouter de l'espace en bas
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-item {
+    flex: 0 0 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    max-height: 500px; // Limite la hauteur des images
+    object-fit: cover;
+}
 
 
 // Footer
@@ -73,9 +96,11 @@ a {
 
 // Stylisation du corps de la page
 body {
-    background-color: #FFF0F5; /* Couleur de fond */
+    background-color: #e95b8b17; /* Couleur de fond */
     font-family: $font-family-base; /* Police de caractères */
 }
+
+//  #e95b8b17 PEUT ETRE LE BON FOND
 
 // Stylisation des titres
 h1, h2, h3, h4, h5, h6 {
@@ -187,6 +212,21 @@ th {
             color: #212529; /* Couleur du texte au survol */
         }
     }
+}
+
+// Stylisation des images-about et des sections
+
+.section-title {
+    font-family: 'Montserrat', sans-serif; /* Utiliser la même police que les titres principaux */
+    font-size: 2rem; /* Taille uniforme pour les titres de section */
+    margin-bottom: 20px; /* Espacement en bas */
+    text-align: center; /* Centrage des titres */
+}
+
+.img-fluid {
+    margin: 0 auto; /* Centrer les images */
+    border-radius: 10px; /* Ajouter des coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajouter une légère ombre */
 }
 
 

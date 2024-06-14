@@ -1,0 +1,60 @@
+{# templates/about/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Qui sommes-nous ?{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    {# Section Profil #}
+    <div class="row mb-5">
+        <div class="col-md-6 text-center mb-4 mb-md-0">
+            <a href="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" data-lightbox="profile-pic">
+                <img src="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" alt="Profil" class="img-fluid rounded-circle" style="width: 300px;">
+            </a>
+        </div>
+        <div class="col-md-6">
+            <h2 class="section-title">Qui sommes-nous ?</h2>
+            <p>
+                Boutique de Prêt-à-porter hommes et femmes. Nous proposons une sélection de pièces jeunes et tendance. Notre équipe est composée de passionnés de mode, menée par nos gérantes passionnées Lena et Tatiana Dymak. Voici ci-dessous quelques-uns de nos meilleurs produits.
+            </p>
+        </div>
+    </div>
+
+    {# Section Horaires #}
+    <div class="row mb-5">
+        <div class="col-md-12 text-center">
+            <h2 class="section-title">Les Horaires</h2>
+            <a href="{{ asset('uploads/informations/horaires.jpg') }}" data-lightbox="info-pic">
+                <img src="{{ asset('uploads/informations/horaires.jpg') }}" alt="Horaires de la Boutique" class="img-fluid" style="width: 500px;">
+            </a>
+        </div>
+    </div>
+
+    {# Section Accès #}
+    <div class="row mb-5">
+        <div class="col-md-12 text-center">
+            <h2 class="section-title">Comment se rendre à la boutique ?</h2>
+            <a href="{{ asset('uploads/informations/acces.jpg') }}" data-lightbox="access-pic">
+                <img src="{{ asset('uploads/informations/acces.jpg') }}" alt="Accès et Parking" class="img-fluid" style="width: 500px;">
+            </a>
+        </div>
+    </div>
+
+    {# Section Témoignages #}
+    <div class="row mb-5">
+        <div class="col-md-12 text-center">
+            <h2 class="section-title">Témoignages de nos clients</h2>
+            <blockquote class="blockquote">
+                <p class="mb-0">"La boutique offre des vêtements de grande qualité et le service est impeccable. Je recommande vivement !" - Client satisfait</p>
+                <footer class="blockquote-footer">Marie Dupont</footer>
+            </blockquote>
+            <blockquote class="blockquote">
+                <p class="mb-0">"J'adore cette boutique ! Toujours les dernières tendances et un accueil chaleureux." - Client satisfait</p>
+                <footer class="blockquote-footer">Jean Martin</footer>
+            </blockquote>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
