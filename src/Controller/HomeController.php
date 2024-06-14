@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -21,7 +22,7 @@ class HomeController extends AbstractController
     // symfony dit : si tu as /home tu appelles cette fonction, et tu affiches ceci
     // controller_name = homeController (variables de vues)
     #[Route('/', name: 'app_home')]
-    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request, CommentRepository $commentRepository): Response
     {
 
         // $msg_acceuil = new TranslatableMessage('its the message to translate');
@@ -31,10 +32,14 @@ class HomeController extends AbstractController
             2 /*limit per page*/
         );
 
+        // Récupérer les commentaires à afficher
+        $comments = $commentRepository->findAll();
+
         return $this->render('home/index.html.twig', [
             // 'msg_acceuil' => $msg_acceuil,
             'categories' => $categoryRepository->findAll(),
             'products' => $products,
+            'comments' => $comments, 
         ]);
     }
 }

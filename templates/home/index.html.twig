@@ -1,83 +1,114 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bonjour HomeController!{% endblock %}
+{% block title %}Bonjour HomeController!
+{% endblock %}
 
 {% block body %}
 
-    {# Section de la photo de la boutique sous la navigation #}
-    <div class="container-fluid my-5"> <!-- Ajout de my-5 ici pour espacer le haut -->
-        <div class="row">
-            <div class="col px-4">
-                <img src="{{ asset('uploads/boutique/boutique.jpg') }}" alt="Boutique" class="img-fluid mx-auto d-block" style="max-height: 1000px;">
-            </div>
-        </div>
-    </div>
+	{# Section de la photo de la boutique sous la navigation #}
+	<div
+		class="container-fluid my-5">
+		<!-- Ajout de my-5 ici pour espacer le haut -->
+		<div class="row">
+			<div class="col px-4">
+				<img src="{{ asset('uploads/boutique/boutique.jpg') }}" alt="Boutique" class="img-fluid mx-auto d-block" style="max-height: 1000px;">
+			</div>
+		</div>
+	</div>
 
-    {# Section "Qui sommes-nous?" #}
-    <div class="container py-5 my-5"> <!-- Ajout de my-5 ici pour espacer cette section -->
-        <div class="row">
-            <div class="col-md-6 text-center mb-4 mb-md-0">
-                <img src="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" alt="Profil" class="img-fluid rounded-circle" style="width: 300px;">
-            </div>
-            <div class="col-md-6">
-                <h2>Qui sommes-nous ?</h2>
-                <p>
-                    Boutique de Prêt-à-porter hommes et femmes. Nous proposons une sélection de pièces jeunes et tendance. Notre équipe est composée de passionnés de mode, menée par nos gérantes passionnées Lena et Tatiana Dymak. Voici ci-dessous quelques-uns de nos meilleurs produits.
-                </p>
-            </div>
-        </div>
-    </div>
+	{# Section "Qui sommes-nous?" #}
+	<div
+		class="container py-5 my-5">
+		<!-- Ajout de my-5 ici pour espacer cette section -->
+		<div class="row">
+			<div class="col-md-6 text-center mb-4 mb-md-0">
+				<img src="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" alt="Profil" class="img-fluid rounded-circle" style="width: 300px;">
+			</div>
+			<div class="col-md-6">
+				<h2>Qui sommes-nous ?</h2>
+				<p>
+					Boutique de Prêt-à-porter hommes et femmes. Nous proposons une sélection de pièces jeunes et tendance. Notre équipe est composée de passionnés de mode, menée par nos gérantes passionnées Lena et Tatiana Dymak. Voici ci-dessous quelques-uns de nos meilleurs produits.
+				</p>
+			</div>
+		</div>
+	</div>
 
-    {# Section du Carousel #}
-    {# <div class="container my-5">
-        <div class="carousel-container">
-            <div class="carousel">
-                <div class="carousel-item">
-                    <img src="chemin_vers_image1.jpg" alt="Image 1">
-                </div>
-                <div class="carousel-item">
-                    <img src="chemin_vers_image2.jpg" alt="Image 2">
-                </div>
-                <!-- Ajoutez plus d'images ici -->
-            </div>
-        </div>
-    </div> #}
 
-    {# Affichage des catégories à gauche et des produits à droite #}
-    <div id="products-section" class="container my-5"> <!-- Ajout de my-5 ici pour espacer cette section -->
-        <div class="row">
-            <div class="col-md-4 mb-5"> <!-- Ajout de mb-5 pour espacer les éléments -->
-                <ul class="list-group">
-                    {% for category in categories %}
-                        <li class="list-group-item">
-                            <a href="{{ path('app_get_product_by_category', {id_category : category.id}) }}">{{ category.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    {% for product in products %}
-                        <div class="col-md-6 mb-5"> <!-- Ajout de mb-5 pour espacer les éléments -->
-                            <div class="card">
-                                <a href="{{ path('app_product_show', {id : product.id })}}" class="card-link">
-                                    <img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
-                                </a>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ product.title }}</h5>
-                                    <p class="card-text">{{ product.description }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
+	{# Section du Carousel #}
+	{# <div class="container my-5">
+	        <div class="carousel-container">
+	            <div class="carousel">
+	                <div class="carousel-item">
+	                    <img src="chemin_vers_image1.jpg" alt="Image 1">
+	                </div>
+	                <div class="carousel-item">
+	                    <img src="chemin_vers_image2.jpg" alt="Image 2">
+	                </div>
+	                <!-- Ajoutez plus d'images ici -->
+	            </div>
+	        </div>
+	    </div> #}
 
-    <div class="navigation my-5"> <!-- Ajout de my-5 ici pour espacer cette section -->
-        {{ knp_pagination_render(products) }}
-    </div>
+	{# Affichage des catégories à gauche et des produits à droite #}
+		<div
+		id="products-section" class="container my-5"> <!-- Ajout de my-5 ici pour espacer cette section -->
+		<div class="row">
+			<div
+				class="col-md-4 mb-5">
+				<!-- Ajout de mb-5 pour espacer les éléments -->
+				<ul class="list-group">
+					{% for category in categories %}
+						<li class="list-group-item">
+							<a href="{{ path('app_get_product_by_category', {id_category : category.id}) }}">{{ category.title }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-md-8">
+				<div class="row">
+					{% for product in products %}
+						<div
+							class="col-md-6 mb-5">
+							<!-- Ajout de mb-5 pour espacer les éléments -->
+							<div class="card">
+								<a href="{{ path('app_product_show', {id : product.id })}}" class="card-link">
+									<img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
+								</a>
+								<div class="card-body">
+									<h5 class="card-title">{{ product.title }}</h5>
+									<p class="card-text">{{ product.description }}</p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="navigation my-5">
+		<!-- Ajout de my-5 ici pour espacer cette section -->
+		{{ knp_pagination_render(products) }}
+	</div>
+
+	{# Section des commentaires des utilisateurs #}
+	<div class="container my-5">
+		<h2 class="text-center">Témoignages de nos clients</h2>
+		<div class="row">
+			{% for comment in comments %}
+				<div class="col-md-4 mb-4">
+					<div class="card">
+						<div class="card-body">
+							<p class="card-text">{{ comment.content }}</p>
+							<footer class="blockquote-footer">{{ comment.user.firstname }}
+								{{ comment.user.name }}</footer>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 
 {% endblock %}
 

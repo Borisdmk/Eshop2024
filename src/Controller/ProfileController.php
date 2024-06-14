@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
+use App\Form\CommentType;
 use App\Form\UserType;
+use App\Repository\CommentRepository;
 use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +19,29 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Enregistrer le commentaire en base de données
+            $comment->setUser($this->getUser()); // Assurez-vous que l'utilisateur actuel est lié au commentaire
+            $comment->setDate(new \DateTime);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'Votre commentaire a été ajouté avec succès.');
+            return $this->redirectToRoute('app_profile');
+        }
+    
+        // Récupérer les commentaires de l'utilisateur actuel
+        $userComments = $commentRepository->findBy(['user' => $this->getUser()]);
+    
         return $this->render('profile/index.html.twig', [
-            'controller_name' => 'ProfileController',
+            'profileForm' => $form->createView(),
+            'userComments' => $userComments,
         ]);
     }
 
