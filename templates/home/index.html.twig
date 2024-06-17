@@ -21,10 +21,10 @@
 		class="container py-5 my-5">
 		<!-- Ajout de my-5 ici pour espacer cette section -->
 		<div class="row">
-			<div class="col-md-6 text-center mb-4 mb-md-0">
+			<div class="col-md-5 text-center mb-4 mb-md-0">
 				<img src="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" alt="Profil" class="img-fluid rounded-circle" style="width: 300px;">
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<h2>Qui sommes-nous ?</h2>
 				<p>
 					Boutique de Prêt-à-porter hommes et femmes. Nous proposons une sélection de pièces jeunes et tendance. Notre équipe est composée de passionnés de mode, menée par nos gérantes passionnées Lena et Tatiana Dymak. Voici ci-dessous quelques-uns de nos meilleurs produits.
@@ -49,48 +49,46 @@
 	        </div>
 	    </div> #}
 
-	{# Affichage des catégories à gauche et des produits à droite #}
-		<div
-		id="products-section" class="container my-5"> <!-- Ajout de my-5 ici pour espacer cette section -->
-		<div class="row">
-			<div
-				class="col-md-4 mb-5">
-				<!-- Ajout de mb-5 pour espacer les éléments -->
-				<ul class="list-group">
-					{% for category in categories %}
-						<li class="list-group-item">
-							<a href="{{ path('app_get_product_by_category', {id_category : category.id}) }}">{{ category.title }}</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-			<div class="col-md-8">
-				<div class="row">
-					{% for product in products %}
-						<div
-							class="col-md-6 mb-5">
-							<!-- Ajout de mb-5 pour espacer les éléments -->
-							<div class="card">
-								<a href="{{ path('app_product_show', {id : product.id })}}" class="card-link">
-									<img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
-								</a>
-								<div class="card-body">
-									<h5 class="card-title">{{ product.title }}</h5>
-									<p class="card-text">{{ product.description }}</p>
-								</div>
-							</div>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div
-		class="navigation my-5">
-		<!-- Ajout de my-5 ici pour espacer cette section -->
-		{{ knp_pagination_render(products) }}
-	</div>
+    {# Affichage des catégories à gauche et des produits à droite #}
+    <div
+    id="products-section" class="container my-5"> <!-- Ajout de my-5 ici pour espacer cette section -->
+        <div class="row">
+            <div
+                class="col-md-4 mb-5">
+                <!-- Ajout de mb-5 pour espacer les éléments -->
+                <ul class="list-group">
+                    {% for category in categories %}
+                        <li class="list-group-item">
+                            <a href="{{ path('app_get_product_by_category', {id_category : category.id}) }}">{{ category.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    {% for product in products %}
+                        <div
+                            class="col-md-6 mb-5">
+                            <!-- Ajout de mb-5 pour espacer les éléments -->
+                            <div class="card">
+                                <a href="{{ path('app_product_show', {id : product.id })}}" class="card-link">
+                                    <img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.title }}</h5>
+                                    <p class="card-text">{{ product.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="navigation my-5">
+                    <!-- Ajout de my-5 ici pour espacer cette section -->
+                    {{ knp_pagination_render(products) }}
+                </div>
+            </div>
+        </div>
+    </div>
 
 	{# Section des commentaires des utilisateurs #}
 	<div class="container my-5">
@@ -102,7 +100,9 @@
 						<div class="card-body">
 							<p class="card-text">{{ comment.content }}</p>
 							<footer class="blockquote-footer">{{ comment.user.firstname }}
-								{{ comment.user.name }}</footer>
+								{{ comment.user.name }} 
+								{# {{ comment.date|date('d/m/Y H:i') }}  DATE DU COMMENTAIRE JE SAIS PAS SI JE L'AFFICHE OU PAS#}
+								</footer>
 						</div>
 					</div>
 				</div>
