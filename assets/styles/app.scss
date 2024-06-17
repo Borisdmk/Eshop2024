@@ -37,27 +37,27 @@ $headings-font-family: 'Montserrat', sans-serif;
 
 // CAROUSEL 
 
-.carousel-container {
-    display: flex;
-    overflow: hidden;
-    margin-bottom: 50px; // Ajouter de l'espace en bas
-}
+// .carousel-container {
+//     display: flex;
+//     overflow: hidden;
+//     margin-bottom: 50px; // Ajouter de l'espace en bas
+// }
 
-.carousel {
-    display: flex;
-    transition: transform 0.5s ease;
-}
+// .carousel {
+//     display: flex;
+//     transition: transform 0.5s ease;
+// }
 
-.carousel-item {
-    flex: 0 0 100%;
-}
+// .carousel-item {
+//     flex: 0 0 100%;
+// }
 
-.carousel-item img {
-    width: 100%;
-    height: auto;
-    max-height: 500px; // Limite la hauteur des images
-    object-fit: cover;
-}
+// .carousel-item img {
+//     width: 100%;
+//     height: auto;
+//     max-height: 500px; // Limite la hauteur des images
+//     object-fit: cover;
+// }
 
 
 // Footer

@@ -4,57 +4,114 @@
 {% block title %}Qui sommes-nous ?{% endblock %}
 
 {% block body %}
+
 <div class="container my-5">
-    {# Section Profil #}
+    {# Section Profil avec Carousel #}
     <div class="row mb-5">
         <div class="col-md-3 text-center mb-4 mb-md-0">
-            <a href="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" data-lightbox="profile-pic">
-                <img src="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" alt="Profil" class="img-fluid rounded-circle" style="width: 300px;">
-            </a>
+            <div id="profileCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" data-lightbox="profile-pic">
+                            <img src="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" alt="Profil" class="img-fluid rounded-circle" style="width: 300px;">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="{{ asset('uploads/profilpicture/photo_mere.jpg') }}" data-lightbox="profile-pic">
+                            <img src="{{ asset('uploads/profilpicture/photo_mere.jpg') }}" alt="Mère" class="img-fluid rounded-circle" style="width: 300px;">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="{{ asset('uploads/profilpicture/photo_soeur.jpg') }}" data-lightbox="profile-pic">
+                            <img src="{{ asset('uploads/profilpicture/photo_soeur.jpg') }}" alt="Sœur" class="img-fluid rounded-circle" style="width: 300px;">
+                        </a>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#profileCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Précédent</span>
+                </a>
+                <a class="carousel-control-next" href="#profileCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Suivant</span>
+                </a>
+            </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             <h2 class="section-title">Qui sommes-nous ?</h2>
             <p>
-                Boutique de Prêt-à-porter hommes et femmes. Nous proposons une sélection de pièces jeunes et tendance. Notre équipe est composée de passionnés de mode, menée par nos gérantes passionnées Lena et Tatiana Dymak. Voici ci-dessous quelques-uns de nos meilleurs produits.
+                Boutique de Prêt-à-porter hommes et femmes. Nous proposons une sélection de pièces jeunes et tendance. Notre équipe est composée de passionnés de mode, menée par nos gérantes passionnées Lena et Tatiana Dymak. 
+            </p>
+            <p>
+                Lena et Tatiana ont fondé cette boutique avec la vision de créer un espace où chacun peut trouver des vêtements qui expriment sa personnalité et son style unique. Nous croyons en la qualité, la tendance et un service client exceptionnel.
+            </p>
+            <p>
+                Nous travaillons avec des designers locaux et internationaux pour vous apporter les dernières tendances de la mode. Notre boutique est un reflet de notre passion pour la mode et notre engagement à offrir à nos clients une expérience de shopping inégalée.
             </p>
         </div>
     </div>
 
-    {# Section Horaires #}
+    {# Section Horaires avec une carte #}
     <div class="row mb-5">
         <div class="col-md-12 text-center">
-            <h2 class="section-title">Les Horaires</h2>
-            <a href="{{ asset('uploads/informations/horaires.jpg') }}" data-lightbox="info-pic">
-                <img src="{{ asset('uploads/informations/horaires.jpg') }}" alt="Horaires de la Boutique" class="img-fluid" style="width: 500px;">
-            </a>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="section-title">Les Horaires</h2>
+                    <a href="{{ asset('uploads/informations/horaires.jpg') }}" data-lightbox="info-pic">
+                        <img src="{{ asset('uploads/informations/horaires.jpg') }}" alt="Horaires de la Boutique" class="img-fluid" style="width: 500px;">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
-    {# Section Accès #}
+    {# Section Accès avec une carte #}
     <div class="row mb-5">
         <div class="col-md-12 text-center">
-            <h2 class="section-title">Comment se rendre à la boutique ?</h2>
-            <a href="{{ asset('uploads/informations/acces.jpg') }}" data-lightbox="access-pic">
-                <img src="{{ asset('uploads/informations/acces.jpg') }}" alt="Accès et Parking" class="img-fluid" style="width: 500px;">
-            </a>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="section-title">Comment se rendre à la boutique ?</h2>
+                    <a href="{{ asset('uploads/informations/acces.jpg') }}" data-lightbox="access-pic">
+                        <img src="{{ asset('uploads/informations/acces.jpg') }}" alt="Accès et Parking" class="img-fluid" style="width: 500px;">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
-    {# Section Témoignages #}
+    {# Section Témoignages avec Carousel #}
     <div class="row mb-5">
         <div class="col-md-12 text-center">
             <h2 class="section-title">Témoignages de nos clients</h2>
-            <blockquote class="blockquote">
-                <p class="mb-0">"La boutique offre des vêtements de grande qualité et le service est impeccable. Je recommande vivement !" - Client satisfait</p>
-                <footer class="blockquote-footer">Marie Dupont</footer>
-            </blockquote>
-            <blockquote class="blockquote">
-                <p class="mb-0">"J'adore cette boutique ! Toujours les dernières tendances et un accueil chaleureux." - Client satisfait</p>
-                <footer class="blockquote-footer">Jean Martin</footer>
-            </blockquote>
+            <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <blockquote class="blockquote">
+                            <p class="mb-0">"La boutique offre des vêtements de grande qualité et le service est impeccable. Je recommande vivement !" - Client satisfait</p>
+                            <footer class="blockquote-footer">Marie Dupont</footer>
+                        </blockquote>
+                    </div>
+                    <div class="carousel-item">
+                        <blockquote class="blockquote">
+                            <p class="mb-0">"J'adore cette boutique ! Toujours les dernières tendances et un accueil chaleureux." - Client satisfait</p>
+                            <footer class="blockquote-footer">Jean Martin</footer>
+                        </blockquote>
+                    </div>
+                    {# Ajoutez plus de témoignages ici #}
+                </div>
+                <a class="carousel-control-prev" href="#testimonialCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Précédent</span>
+                </a>
+                <a class="carousel-control-next" href="#testimonialCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Suivant</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
 
 
