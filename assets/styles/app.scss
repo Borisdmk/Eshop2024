@@ -102,6 +102,9 @@ body {
 
 //  #e95b8b17 PEUT ETRE LE BON FOND
 
+
+
+
 // Stylisation des titres
 h1, h2, h3, h4, h5, h6 {
     font-family: $headings-font-family; /* Police de caractères */
@@ -135,6 +138,9 @@ th, td {
 th {
     background-color: #f2f2f2; /* Couleur de fond des en-têtes */
 }
+
+
+
 
 .cart-total {
     margin-top: 20px; /* Espacement supérieur */
@@ -191,6 +197,8 @@ th {
     }
 }
 
+
+
 /* Stylisation des catégories */
 .list-group-item {
     border: none; /* Suppression de la bordure par défaut */
@@ -214,6 +222,9 @@ th {
     }
 }
 
+
+
+
 // Stylisation des images-about et des sections
 
 .section-title {
@@ -228,6 +239,9 @@ th {
     border-radius: 10px; /* Ajouter des coins arrondis */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajouter une légère ombre */
 }
+
+
+
 
 
 // Formulaire contact
