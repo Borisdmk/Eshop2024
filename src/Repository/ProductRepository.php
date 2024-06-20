@@ -31,6 +31,19 @@ class ProductRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+     // pour l'input type search, une requête SQL classique de Symfony ne conviendra pas.
+    // la sélection des articles dépendra du mot clé entré dans Search (donc LIKE %motclé%)
+    public function findProductBySearch($search) : array {
+
+        return $this->createQueryBuilder('a')
+
+            ->andWhere('a.description LIKE :search')
+            ->setParameter('search', "%" . $search . "%")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    public function findOneBySomeField($value): ?Product
 //    {
 //        return $this->createQueryBuilder('p')

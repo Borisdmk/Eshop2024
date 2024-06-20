@@ -42,4 +42,32 @@ class HomeController extends AbstractController
             'comments' => $comments, 
         ]);
     }
+
+    #[Route('/search', name: 'app_search_product', methods: ['GET'])]
+    public function getProductBySearch(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+
+        // si j'ai un param GET search
+        if ($request->query->has("search")) {
+
+            $search = strtolower($request->query->get("search"));
+
+            $products = $paginator->paginate(
+                $productRepository->findProductBySearch($search), /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/
+                2 /*limit per page*/
+            );
+
+
+
+            return $this->render('product/index.html.twig', [
+                'products' => $products,
+            ]);
+
+        } else {
+            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+
+    }
 }
