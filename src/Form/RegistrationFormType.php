@@ -13,11 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email; // Cette classe est utilisée pour vérifier que la valeur d'un champ est une adresse e-mail valide.
+use Symfony\Component\Validator\Constraints\File; // Cette classe est utilisée pour valider les fichiers téléchargés via un champ de type FileType. Cette contrainte spécifie la taille maximale du fichier et les types MIME autorisés (PNG et JPEG dans cet exemple). Elle générera un message d'erreur si les conditions ne sont pas respectées.
+use Symfony\Component\Validator\Constraints\IsTrue; // Utilisée pour valider les cases à cocher où l'utilisateur doit accepter des conditions spécifiques.
+use Symfony\Component\Validator\Constraints\Length; // Cette classe est utilisée pour spécifier des contraintes sur la longueur d'une chaîne de caractères
+use Symfony\Component\Validator\Constraints\NotBlank; // Cette classe est utilisée pour spécifier qu'un champ ne doit pas être vide.
 
 class RegistrationFormType extends AbstractType
 {
