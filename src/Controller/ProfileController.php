@@ -47,7 +47,7 @@ class ProfileController extends AbstractController
 
     
     #[Route('/profile/edit', name: 'app_profile_edit')]
-    public function modify(Request $request, EntityManagerInterface $entityManager, ImageService $imageService, User $user): Response
+    public function modify(Request $request, EntityManagerInterface $entityManager, ImageService $imageService): Response
     {
 
 
@@ -57,7 +57,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 // Copie l'image et récupère le nom du nouveau fichier
-                $fileName = $imageService->copyImage("picture", $this->getParameter("article_picture_directory") ,$form);
+                $fileName = $imageService->copyImage("picture", $this->getParameter("user_picture_directory") ,$form);
                 // Met à jour le nom de l'image de l'article
                 $this->getUser()->setPicture($fileName);
                 $entityManager->persist($this->getUser()); // insérer en base
