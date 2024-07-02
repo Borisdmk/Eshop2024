@@ -11,10 +11,13 @@ use App\Repository\CommentRepository;
 use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ProfileController extends AbstractController
 {
@@ -24,28 +27,28 @@ class ProfileController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             // Enregistrer le commentaire en base de données
             $comment->setUser($this->getUser()); // Assurez-vous que l'utilisateur actuel est lié au commentaire
             $comment->setDate(new \DateTime);
             $entityManager->persist($comment);
             $entityManager->flush();
-    
+
             $this->addFlash('success', 'Votre commentaire a été ajouté avec succès.');
             return $this->redirectToRoute('app_profile');
         }
-    
+
         // Récupérer les commentaires de l'utilisateur actuel
         $userComments = $commentRepository->findBy(['user' => $this->getUser()]);
-    
+
         return $this->render('profile/index.html.twig', [
             'profileForm' => $form->createView(),
             'userComments' => $userComments,
         ]);
     }
 
-    
+
     #[Route('/profile/edit', name: 'app_profile_edit')]
     public function modify(Request $request, EntityManagerInterface $entityManager, ImageService $imageService): Response
     {
@@ -57,7 +60,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 // Copie l'image et récupère le nom du nouveau fichier
-                $fileName = $imageService->copyImage("picture", $this->getParameter("user_picture_directory") ,$form);
+                $fileName = $imageService->copyImage("picture", $this->getParameter("user_picture_directory"), $form);
                 // Met à jour le nom de l'image de l'article
                 $this->getUser()->setPicture($fileName);
                 $entityManager->persist($this->getUser()); // insérer en base
@@ -115,5 +118,24 @@ class ProfileController extends AbstractController
         return $this->render('profile/modify-password.html.twig', [ // Cela rend le modèle 'profile/modify-password.html.twig' et passe le formulaire de modification de mot de passe à ce modèle.
             'passwordForm' => $form,
         ]);
+    }
+
+    #[Route('/profile/delete', name: 'app_profile_delete')]
+    public function delete(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage): Response
+    {
+        $user = $this->getUser(); // recupere le user
+
+
+        // Supprimer l'utilisateur de la base de données
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        // Déconnecter l'utilisateur après la suppression
+        $tokenStorage->setToken(null);
+
+        // Redirection vers une page d'accueil ou une autre page appropriée
+        $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
+
+        return $this->redirectToRoute('app_home'); // Redirige vers la page d'accueil (à ajuster selon votre configuration)
     }
 }
