@@ -120,7 +120,7 @@ class Payment
         $this->paymentMethodId = $paymentMethodId;
         return $this;
     }
-    public function getSuccessPageExpired(): ?bool
+    public function isSuccessPageExpired(): ?bool
     {
         return $this->successPageExpired;
     }

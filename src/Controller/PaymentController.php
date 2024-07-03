@@ -28,7 +28,12 @@ class PaymentController extends AbstractController
     public function checkout(Request $request, EntityManagerInterface $entityManager): Response
     {
 
+        // Récupère l'utilisateur actuellement connecté
         $user = $this->getUser();
+        if (!$user) {
+            // Rediriger vers la page de connexion ou afficher un message d'erreur
+            return $this->redirectToRoute('app_login');
+        }
         // je récupère ma session panier
         $productsInSession = $request->getSession()->get('cart');
 
@@ -44,7 +49,7 @@ class PaymentController extends AbstractController
             for($i = 0; $i < count($productsInSession["id"]); $i++) {
                 $products[] = [
                     "price" => $productsInSession["priceIdStripe"][$i],
-                    "quantity" => $productsInSession["quantity"][$i]
+                    "quantity" => $productsInSession["quantity"][$i] // Quantité du produit
                 ];
             }
     
@@ -76,9 +81,11 @@ class PaymentController extends AbstractController
             $entityManager->persist($payment);
             $entityManager->flush();
     
+            // Redirige vers la page de paiement Stripe
             return $this->redirect($session->url, 303);
 
         } else {
+            // Si le panier est vide, redirige vers la page d'accueil
             return $this->redirectToRoute('app_home');
         }
 
@@ -134,16 +141,18 @@ class PaymentController extends AbstractController
 
                 // je vais générer les orders et orders details ainsi que la facture que j'envoie par email
 
-                // je récupère la session cart
+                // je récupère le panier de la session
                 $cart = $request->getSession()->get('cart');
                 // je créé une commande
                 $order = new Order;
                 $cartTotal = 0;
 
+                // Calcule le total du panier
                 for ($i = 0; $i < count($cart["id"]); $i++) {
                     $cartTotal += (float) $cart["price"][$i] * $cart["quantity"][$i];
                 }
 
+                // Met à jour la commande avec le total, le statut, l'utilisateur et la date
                 $order->setTotal($cartTotal);
                 $order->setStatus('En cours');
                 $order->setUser($this->getUser());
@@ -157,10 +166,16 @@ class PaymentController extends AbstractController
                     $orderDetails = new OrderDetails;
                     $orderDetails->setIdOrder($order);
                     $orderDetails->setProduct($productRepository->find($cart["id"][$i]));
-                    $orderDetails->setQuantity($cart["id"][$i]);
+                    $orderDetails->setQuantity($cart["quantity"][$i]);
 
-                    $entityManager->persist($orderDetails);
-                    $entityManager->flush();
+                // Décrémenter le stock du produit
+                $product = $orderDetails->getProduct();
+                $newStock = (int) $product->getStock() - $cart["quantity"][$i];
+                $product->setStock((string) $newStock);
+
+                $entityManager->persist($orderDetails);
+                $entityManager->persist($product); // Assurez-vous de persister l'entité product pour enregistrer la mise à jour du stock
+                $entityManager->flush(); // pour enregistrer toutes les modifications dans la base de données.
                 }
 
                 if(!$order->isPdf()) {
@@ -179,7 +194,7 @@ class PaymentController extends AbstractController
                         'amount' => $order->getTotal(),
                         'invoiceNumber' => $invoiceNumber,
                         'date' => new \DateTime(),
-                        'orderDetails' => $orderDetailsRepository->findBy(['orderNumber' => $order->getId()])
+                        'orderDetails' => $orderDetailsRepository->findBy(['idOrder' => $order->getId()])
                     ]);
             
                     // 4- On transforme le twig en pdf avec les options de format
@@ -203,18 +218,19 @@ class PaymentController extends AbstractController
                         ->from($this->getParameter('app.mailAddress'))
                         ->to($this->getUser()->getEmail())
                         ->subject("Facture Blog Afpa 2024")
-                        ->htmlTemplate("invoice/email.html.twig")
+                        ->htmlTemplate("invoices/email.html.twig")
                         ->context([
                             'user' => $this->getUser(),
                             'amount' => $order->getTotal(),
                             'invoiceNumber' => $invoiceNumber,
                             'date' => new \DateTime(),
-                            'orderDetails' => $orderDetailsRepository->findBy(['orderNumber' => $order->getId()])
+                            'orderDetails' => $orderDetailsRepository->findBy(['idOrder' => $order->getId()])
                         ])
                         ->attach($finalInvoice, sprintf('facture-' . $invoiceNumber . 'blog-afpa.pdf', date("Y-m-d")));
             
                     $mailer->send($email);
             
+                     // Marque le PDF comme généré
                     $order->setPdf(true);
                     $entityManager->persist($order);
                     $entityManager->flush();
@@ -223,12 +239,13 @@ class PaymentController extends AbstractController
                     $session = $request->getSession();
                     $session->set('cart', []);        
 
+                    // Rend la vue de succès du paiement
                     return $this->render('payment/success.html.twig', [
                         'user' => $this->getUser(),
                         'amount' => $order->getTotal(),
                         'invoiceNumber' => $invoiceNumber,
                         'date' => new \DateTime(),
-                        'orderDetails' => $orderDetailsRepository->findBy(['orderNumber' => $order->getId()])
+                        'orderDetails' => $orderDetailsRepository->findBy(['idOrder' => $order->getId()])
                     ]);
         
                 }

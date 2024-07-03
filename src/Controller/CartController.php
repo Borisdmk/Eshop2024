@@ -30,7 +30,7 @@ class CartController extends AbstractController
 
         if(!is_null($session->get('cart')) && count($session->get('cart')) > 0) {
             for($i = 0; $i < count($session->get('cart')["id"]); $i++) {
-                $carTotal += (float) $session->get('cart')["price"][$i] * $session->get('cart')["stock"][$i];
+                $carTotal += (float) $session->get('cart')["price"][$i] * $session->get('cart')["quantity"][$i];
             }
         }   
 
@@ -59,7 +59,7 @@ class CartController extends AbstractController
                 "description" => [],
                 "picture" => [],
                 "price" => [],
-                "stock" => [],
+                "quantity" => [],
                 "priceIdStripe" => [],  
             ]);
         }
@@ -74,7 +74,7 @@ class CartController extends AbstractController
         $cart["description"][] = $product->getDescription();
         $cart["picture"][] = $product->getPicture();
         $cart["price"][] = $product->getPrice();
-        $cart["stock"][] = 1;
+        $cart["quantity"][] = 1;
         $cart["priceIdStripe"][] = $product->getPriceIdStripe();  
 
         $session->set('cart', $cart);
@@ -84,7 +84,7 @@ class CartController extends AbstractController
         $cartTotal = 0;
 
         for($i = 0; $i < count($session->get('cart')['id']); $i++) {
-            $cartTotal += (float) $session->get('cart')["price"][$i] * $session->get('cart')["stock"][$i];
+            $cartTotal += (float) $session->get('cart')["price"][$i] * $session->get('cart')["quantity"][$i];
         }
 
         // afficher la page panier

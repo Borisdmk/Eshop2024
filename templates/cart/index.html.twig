@@ -48,7 +48,7 @@ th {
     <table>
         <thead>
             <tr>
-                <th>Article</th>
+                <th>Product</th>
                 <th>Titre</th>
                 <th>description</th>
                 <th>image</th>
@@ -64,9 +64,9 @@ th {
                 <td>{{ cartItems.id[i] }}</td>
                 <td>{{ cartItems.title[i] }}</td>
                 <td>{{ cartItems.description[i] }}</td>
-                <td><img style="width:100px" src="{{ asset('uploads/articles/' ~ cartItems.picture[i]) }}" alt="Image de {{ cartItems.title[i] }}" </td>
+                <td><img style="width:100px" src="{{ asset('uploads/products/' ~ cartItems.picture[i]) }}" alt="Image de {{ cartItems.title[i] }}" </td>
                 <td>{{ cartItems.price[i] }}</td>
-                <td>{{ cartItems.stock[i] }}</td>
+                <td>{{ cartItems.quantity[i] }}</td>
                 {# <td> {{ include('cart/_delete_form.html.twig') }} </td> #}
 
         {% endfor %}
@@ -76,10 +76,10 @@ th {
             Total: <span>{{ cartTotal }} €</span>
         </div>
 
-        {# PAYEMENT A FAIRE !!!!!!!!!!! #}
-        {# <form action="{{path('app_stripe_checkout')}}" method="POST">
+        
+        <form action="{{path('app_stripe_checkout')}}" method="POST">
             <input type="submit" name="payer" value="Pay" class="btn btn-outline-secondary">
-        </form> #}
+        </form>
 
         <a href="{{path('app_cart_delete')}}" class="btn btn-warning"> Vider le panier </a>
     {% else %}
