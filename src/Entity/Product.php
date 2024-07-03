@@ -30,6 +30,9 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $stock = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $priceIdStripe = null;
+
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
@@ -149,6 +152,15 @@ class Product
             }
         }
 
+        return $this;
+    }
+    public function getPriceIdStripe(): ?string
+    {
+        return $this->priceIdStripe;
+    }
+    public function setPriceIdStripe(string $priceIdStripe): static
+    {
+        $this->priceIdStripe = $priceIdStripe;
         return $this;
     }
 }
