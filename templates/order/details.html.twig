@@ -1,0 +1,19 @@
+ {# templates/order/details.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la commande {{ order.id }}{% endblock %}
+
+{% block body %}
+    <h1>Détails de la commande {{ order.id }}</h1>
+
+    <p><strong>Date de la commande :</strong> {{ order.date|date('d/m/Y H:i') }}</p>
+    <p><strong>Total :</strong> {{ order.total }} EUR</p>
+
+    <h2>Produits commandés :</h2>
+    <ul>
+        {% for orderDetail in order.orderDetails %}
+            <li>{{ orderDetail.product.title }} - Quantité : {{ orderDetail.quantity }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

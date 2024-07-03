@@ -8,6 +8,7 @@ use App\Form\ChangePasswordFormType;
 use App\Form\CommentType;
 use App\Form\UserType;
 use App\Repository\CommentRepository;
+use App\Repository\OrderRepository;
 use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, OrderRepository $orderRepository): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -42,9 +43,12 @@ class ProfileController extends AbstractController
         // Récupérer les commentaires de l'utilisateur actuel
         $userComments = $commentRepository->findBy(['user' => $this->getUser()]);
 
+        $userOrders = $orderRepository->findBy(['user' => $this->getUser()], ['date' => 'DESC']);
+
         return $this->render('profile/index.html.twig', [
             'profileForm' => $form->createView(),
             'userComments' => $userComments,
+            'userOrders' => $userOrders,  // Passer les commandes de l'utilisateur à la vue
         ]);
     }
 

@@ -1,71 +1,85 @@
-{# templates/profile/show.html.twig #}
+{# templates/profile/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de l'utilisateur!
-{% endblock %}
+{% block title %}Profil de l'utilisateur!{% endblock %}
 
 {% block body %}
-	{% include 'flash.html.twig' %}
+    {% include 'flash.html.twig' %}
 
-	<div class="container mt-5">
-		<div class="row">
-			<div class="col-md-6 mx-auto">
-				<div class="card">
-					<div class="card-header">
-						Information du Profil
-					</div>
-					<div class="card-body">
-						<img src="{{ asset('/uploads/users/' ~ app.user.picture) }}" class="card-img-top" alt="{{ app.user.firstName }}">
-						<h5 class="card-title">{{ app.user.firstname }}
-							{{ app.user.name }}</h5>
-						<p class="card-text">Adresse :
-							{{ app.user.address }}</p>
-						<p class="card-text">Code Postal :
-							{{ app.user.postalCode }}</p>
-						<p class="card-text">Email :
-							{{ app.user.email }}</p>
-						<p class="card-text">Numéro de téléphone :
-							{{ app.user.phonenumber }}</p>
-						<a href="{{ path('app_profile_edit') }}" class="btn btn-warning">Modifier information</a>
-						<a href="{{ path('app_profile_password_edit') }}" class="btn btn-danger">Modifier mot de passe</a>
-						<a href="{{ path('app_profile_delete') }}" class="btn btn-dark text-light" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">Supprimer son compte</a>
-					</div>
-				</div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        Information du Profil
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ asset('/uploads/users/' ~ app.user.picture) }}" class="card-img-top" alt="{{ app.user.firstName }}">
+                        <h5 class="card-title">{{ app.user.firstname }} {{ app.user.name }}</h5>
+                        <p class="card-text">Adresse : {{ app.user.address }}</p>
+                        <p class="card-text">Code Postal : {{ app.user.postalCode }}</p>
+                        <p class="card-text">Email : {{ app.user.email }}</p>
+                        <p class="card-text">Numéro de téléphone : {{ app.user.phonenumber }}</p>
+                        <a href="{{ path('app_profile_edit') }}" class="btn btn-warning">Modifier information</a>
+                        <a href="{{ path('app_profile_password_edit') }}" class="btn btn-danger">Modifier mot de passe</a>
+                        <a href="{{ path('app_profile_delete') }}" class="btn btn-dark text-light" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')">Supprimer son compte</a>
+                    </div>
+                </div>
 
-				<div class="card mt-5">
-					<div class="card-header">
-						Laissez un commentaire
-					</div>
-					<div class="card-body">
-						{{ form_start(profileForm) }}
-						{{ form_row(profileForm.content) }}
-						<button class="btn btn-primary">Ajouter un commentaire</button>
-						{{ form_end(profileForm) }}
-					</div>
-				</div>
+                <div class="card mt-5">
+                    <div class="card-header">
+                        Laissez un commentaire
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(profileForm) }}
+                        {{ form_row(profileForm.content) }}
+                        <button class="btn btn-primary">Ajouter un commentaire</button>
+                        {{ form_end(profileForm) }}
+                    </div>
+                </div>
 
-				<div class="card mt-5">
-					<div class="card-header">
-						Vos commentaires
-					</div>
-					<div class="card-body">
-						{% for comment in userComments %}
-							<blockquote class="blockquote">
-								<p class="mb-0">{{ comment.content }}</p>
+                <div class="card mt-5">
+                    <div class="card-header">
+                        Vos commentaires
+                    </div>
+                    <div class="card-body">
+                        {% for comment in userComments %}
+                            <blockquote class="blockquote">
+                                <p class="mb-0">{{ comment.content }}</p>
                                 <br>
-								<footer class="blockquote-footer">{{ comment.date|date('d/m/Y H:i') }}</footer>
-								<form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
-									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
-									<button class="btn btn-danger btn-sm">Supprimer</button>
-								</form>
-							</blockquote>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                <footer class="blockquote-footer">{{ comment.date|date('d/m/Y H:i') }}</footer>
+                                <form method="post" action="{{ path('comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                    <button class="btn btn-danger btn-sm">Supprimer</button>
+                                </form>
+                            </blockquote>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="card mt-5">
+                    <div class="card-header">
+                        Historique de commandes
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for order in userOrders %}
+                                <li>
+                                    <a href="{{ path('app_order_details', {'id': order.id}) }}">
+                                        Commande #{{ order.id }} - {{ order.date|date('d/m/Y H:i') }}
+                                    </a>
+                                    - Total : {{ order.total }} EUR
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
 
 
 {# <a href={{path("app_forgot_password_request")}} class="btn btn-lg btn-danger" >Mot de passe oublié</a> #}
