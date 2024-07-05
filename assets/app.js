@@ -7,6 +7,12 @@ import './bootstrap.js';
  */
 import './styles/app.scss';
 
+// Importation des styles Font Awesome
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
+// Optionnel : Importation des scripts Font Awesome (si vous avez besoin des fonctionnalités JavaScript de Font Awesome)
+import '@fortawesome/fontawesome-free/js/all.min.js';
+
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
@@ -40,16 +46,15 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 document.querySelector('#search-products').addEventListener('submit', function (event) {
 
     // PREVENTION DE LA SOUMISSION DU FORMULAIRE
-    event.preventDefault(); // Empêche le formulaire de soumettre de manière classique, permettant de gérer la soumission via JavaScript.
+        event.preventDefault(); // Empêche le formulaire de soumettre de manière classique, permettant de gérer la soumission via JavaScript.
 
     // RECUPERATION DE LA VALEUR DE RECHERCHE
-    // Récupère la valeur de l'input avec le nom 'search'
-    const searchInput = document.querySelector('input[name="search"]');
-    const query = searchInput.value; // Récupère la valeur de l'input de recherche.
+        const searchInput = document.querySelector('input[name="search"]');
+        const query = searchInput.value; // Récupère la valeur de l'input de recherche.
 
     // ENVOIE DE LA REQUETE ASYNCHRONE
     // Envoie une requête HTTP GET à l'URL '/search-async' avec la valeur de 'query' comme paramètre
-    fetch(`/search-async?search=${encodeURIComponent(query)}`)
+        fetch(`/search-async?search=${encodeURIComponent(query)}`)
         .then(response => response.json()) // Parse la réponse JSON.
 
         // TRAITEMENT DES PRODUITS RETOURNES
@@ -82,11 +87,8 @@ document.querySelector('#search-products').addEventListener('submit', function (
                 `;
             });
             productHtml += "</div>";
-
             console.log(productHtml);
             // Affiche le HTML généré dans le conteneur des résultats
             resultsContainer.innerHTML = productHtml; // Remplace le contenu du conteneur des résultats par le HTML généré.
-
-
         });
 });

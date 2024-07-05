@@ -178,7 +178,7 @@ class PaymentController extends AbstractController
                 $entityManager->flush(); // pour enregistrer toutes les modifications dans la base de données.
                 }
 
-                if(!$order->isPdf()) {
+                if(is_null($order->getPdf()) || empty($order->getPdf())) {
 
                     // on génera le PDF
                     $pdfOptions = new Options();
@@ -210,6 +210,7 @@ class PaymentController extends AbstractController
                     }
         
                     $pathInvoice = "./uploads/factures/" . $invoiceNumber . "_" . $this->getUser()->getId() . ".pdf";
+                    $namePdf = $invoiceNumber . "_" . $this->getUser()->getId() . ".pdf";
                     file_put_contents($pathInvoice, $finalInvoice);
                     // on l'enverra par mail la facture
                     // on affichera une page de succès
@@ -231,7 +232,7 @@ class PaymentController extends AbstractController
                     $mailer->send($email);
             
                      // Marque le PDF comme généré
-                    $order->setPdf(true);
+                    $order->setPdf($namePdf);
                     $entityManager->persist($order);
                     $entityManager->flush();
             
