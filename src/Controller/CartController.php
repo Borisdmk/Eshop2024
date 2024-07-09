@@ -10,6 +10,7 @@ use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -43,7 +44,7 @@ class CartController extends AbstractController
    
 
 
-    #[Route('/cart/{idProduct}', name: 'app_cart_add', methods: ['POST'])]
+    #[Route('/cart/{idProduct}', name: 'app_cart_add', methods: ['POST', 'GET'])]
     public function addProduct(Request $request, ProductRepository $productRepository, int $idProduct): Response
     {
 
@@ -95,15 +96,13 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/cart/delete', name: 'app_cart_delete', methods: ['GET'])]
+    #[Route('/cart/delete/all', name: 'app_cart_delete', methods: ['POST'])]
     public function deleteCart(Request $request): Response
     {
-
         $session = $request->getSession();
-        $session->set('cart', []);
+        $session->remove('cart');
 
-        return $this->redirectToRoute('app_cart');
-
+        return new JsonResponse(['status' => 'success']);
     }
 }
     

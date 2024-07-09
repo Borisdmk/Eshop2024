@@ -55,7 +55,6 @@
         <div class="row">
             <div
                 class="col-md-4 mb-5">
-                <!-- Ajout de mb-5 pour espacer les éléments -->
                 <ul class="list-group">
                     {% for category in categories %}
                         <li class="list-group-item">
@@ -69,7 +68,6 @@
                     {% for product in products %}
                         <div
                             class="col-md-6 mb-5">
-                            <!-- Ajout de mb-5 pour espacer les éléments -->
                             <div class="card">
                                 <a href="{{ path('app_product_show', {id : product.id })}}" class="card-link">
                                     <img src="{{ asset('/uploads/products/' ~ product.picture) }}" class="card-img-top" alt="{{ product.title }}">

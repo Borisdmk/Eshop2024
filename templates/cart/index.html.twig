@@ -38,54 +38,82 @@ th {
     text-align: right;
     font-size: 20px;
 }
-
 </style>
-
 
 <div class="cart-container">
     <h2>Votre panier</h2>
-    {% if cartItems is not empty %}
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Titre</th>
-                <th>description</th>
-                <th>image</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                {# <th> Action </th> #}
-            </tr>
-        </thead>
-        <tbody>
-
-        {% for i in 0..(cartItems.id|length -1) %}
-            <tr>
-                <td>{{ cartItems.id[i] }}</td>
-                <td>{{ cartItems.title[i] }}</td>
-                <td>{{ cartItems.description[i] }}</td>
-                <td><img style="width:100px" src="{{ asset('uploads/products/' ~ cartItems.picture[i]) }}" alt="Image de {{ cartItems.title[i] }}" </td>
-                <td>{{ cartItems.price[i] }}</td>
-                <td>{{ cartItems.quantity[i] }}</td>
-                {# <td> {{ include('cart/_delete_form.html.twig') }} </td> #}
-
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="cart-total">
+    <div id="cart-table-container">
+        {% if cartItems is not empty %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Titre</th>
+                    <th>description</th>
+                    <th>image</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                    {# <th> Action </th> #}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in 0..(cartItems.id|length -1) %}
+                <tr>
+                    <td>{{ cartItems.id[i] }}</td>
+                    <td>{{ cartItems.title[i] }}</td>
+                    <td>{{ cartItems.description[i] }}</td>
+                    <td><img style="width:100px" src="{{ asset('uploads/products/' ~ cartItems.picture[i]) }}" alt="Image de {{ cartItems.title[i] }}" </td>
+                    <td>{{ cartItems.price[i] }}</td>
+                    <td>{{ cartItems.quantity[i] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="cart-total">
             Total: <span>{{ cartTotal }} €</span>
         </div>
-
-        
-        <form action="{{path('app_stripe_checkout')}}" method="POST">
+        <form action="{{ path('app_stripe_checkout') }}" method="POST">
             <input type="submit" name="payer" value="Pay" class="btn btn-outline-secondary">
         </form>
-
-        <a href="{{path('app_cart_delete')}}" class="btn btn-warning"> Vider le panier </a>
-    {% else %}
+        <button id="empty-cart" class="btn btn-warning">Vider le panier</button>
+        {% else %}
         <h2> Panier vide </h2>
-    {% endif %}
-    
+        {% endif %}
+    </div>
+    <h2 id="empty-cart-message" style="display: none;">Panier vide</h2>
 </div>
 
+{# REQUETE ASYNCRONE SUR LE PANIER #}
+<script>
+// Sélectionne l'élément HTML avec l'id 'empty-cart' et ajoute un écouteur d'événement 'click'
+document.getElementById('empty-cart').addEventListener('click', function () {
+    // Effectue une requête fetch vers l'URL définie par la route 'app_cart_delete'
+    fetch('{{ path('app_cart_delete') }}', {
+        method: 'POST', // Utilise la méthode HTTP POST pour envoyer la requête
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',  // Indique que la requête est asynchrone (AJAX)
+            'Content-Type': 'application/json', // Spécifie que le corps de la requête est en format JSON
+            'X-CSRF-TOKEN': '{{ csrf_token('empty_cart') }}' // Inclut un token CSRF pour protéger contre les attaques CSRF
+        },
+    })
+    .then(response => response.json()) // Convertit la réponse en format JSON
+    .then(data => { // Traite les données JSON reçues
+        if (data.status === 'success') { // Vérifie si le statut de la réponse est 'success'
+            alert('Le panier a été vidé avec succès.'); // Affiche une alerte de succès
+             // Cache le conteneur du tableau du panier
+            document.getElementById('cart-table-container').style.display = 'none';
+            // Affiche le message "Panier vide"
+            document.getElementById('empty-cart-message').style.display = 'block';
+            // Vide le contenu de l'élément indiquant le total des produits dans le panier
+            document.getElementById('totalProductInCart').innerHTML="";
+        } else { // Si le statut de la réponse n'est pas 'success'
+            alert('Une erreur est survenue.'); // Affiche une alerte d'erreur
+        }
+    })
+    .catch(error => { // Traite les erreurs survenues lors de la requête
+        console.error('Erreur:', error);  // Affiche l'erreur dans la console
+        alert('Une erreur est survenue.'); // Affiche une alerte d'erreur
+    });
+});
+</script>
 {% endblock %}
