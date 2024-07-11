@@ -5,41 +5,70 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, MailerInterface $mailer, EntityManagerInterface $em): Response
-    {
+    public function index(
+    Request $request,
+    EntityManagerInterface $entityManager,
+    ValidatorInterface $validator, 
+    MailerInterface $mailer   
+    ): Response {
+
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
-        $form->handleRequest($request);
+        $form->handleRequest($request); // permet d'intercepter la requête lancée par la soumission du formulaire
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($contact);
-            $em->flush();
+        if($form->isSubmitted()) {
 
-            $email = (new Email())
-                ->from('contact@borisdymak.fr')
-                ->to('contact@borisdymak.fr') // Remplace par l'email de destination
-                ->subject($contact->getSubject())
-                ->text($contact->getMessage());
+            if ($form->isValid()) {
 
-            $mailer->send($email);
+                $contact->setDate(new \DateTime);
+                $entityManager->persist($contact); // insérer en base
+                $entityManager->flush(); // fermer la transaction executée par la BDD
+    
+                $this->addFlash(
+                    'success',
+                    'Votre message a bien été envoyé'
+                );
 
-            $this->addFlash('success', 'Votre message a été envoyé avec succès.');
+                // $message = (new Email())
+                $message = (new TemplatedEmail())
+                    ->from($this->getParameter('app.mailAddress'))
+                    ->to($this->getParameter('app.mailAddress'))
+                    ->cc($contact->getEmail())
+                    ->subject($contact->getSubject())
+                    ->text($contact->getMessage())
+                    // ->html('<p>' . $contact->getMessage() .' </p>');
+                    ->htmlTemplate("email/contact.html.twig")
+                    ->context(['contact' => $contact,]);
+                $mailer->send($message);
+    
 
-            return $this->redirectToRoute('app_contact');
+                // rediriger vers une autre page
+                // return $this->redirectToRoute(/* ... */);
+            }
+                    
+                // else {
+
+                // $errors = $validator->validate($contact);
+                // dd($form->getErrors()); // c'est un var_dump
+                
+                // }
+
         }
 
         return $this->render('contact/index.html.twig', [
-            'form' => $form->createView(),
+            'contactForm' => $form,
+            'errors' => !isset($errors) ? null : $errors // si j'ai pas d'erreur n'affiche rien, sinon affiche errors
         ]);
     }
 }
