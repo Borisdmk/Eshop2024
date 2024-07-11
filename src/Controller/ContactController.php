@@ -48,7 +48,7 @@ class ContactController extends AbstractController
                     ->subject($contact->getSubject())
                     ->text($contact->getMessage())
                     // ->html('<p>' . $contact->getMessage() .' </p>');
-                    ->htmlTemplate("contact/index.html.twig")
+                    ->htmlTemplate("email/index.html.twig")
                     ->context(['contact' => $contact,]);
                 $mailer->send($message);
     
