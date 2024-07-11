@@ -26,8 +26,8 @@ class ContactController extends AbstractController
             $em->flush();
 
             $email = (new Email())
-                ->from($contact->getEmail())
-                ->to('you@example.com') // Remplace par l'email de destination
+                ->from('contact@borisdymak.fr')
+                ->to('contact@borisdymak.fr') // Remplace par l'email de destination
                 ->subject($contact->getSubject())
                 ->text($contact->getMessage());
 
