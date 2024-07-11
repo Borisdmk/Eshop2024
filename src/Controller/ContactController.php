@@ -48,7 +48,7 @@ class ContactController extends AbstractController
                     ->subject($contact->getSubject())
                     ->text($contact->getMessage())
                     // ->html('<p>' . $contact->getMessage() .' </p>');
-                    ->htmlTemplate("email/contact.html.twig")
+                    ->htmlTemplate("contact/index.html.twig")
                     ->context(['contact' => $contact,]);
                 $mailer->send($message);
     
@@ -67,7 +67,7 @@ class ContactController extends AbstractController
         }
 
         return $this->render('contact/index.html.twig', [
-            'contactForm' => $form,
+            'form' => $form,
             'errors' => !isset($errors) ? null : $errors // si j'ai pas d'erreur n'affiche rien, sinon affiche errors
         ]);
     }
