@@ -19,7 +19,7 @@
 						<p class="card-text">Stock:
 							{{ product.stock }}</p>
 						<a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-info">Voir</a>
-						{# Ajoutez le bouton Ajouter au panier ici si nécessaire #}
+						{# imput pour le panier #}
 						<form action="{{ path('app_cart_add', {'idProduct': product.id}) }}" method="POST">
 							<button type="submit" class="btn btn-outline-success">Ajouter au panier</button>
 						</form>

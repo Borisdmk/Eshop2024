@@ -5,10 +5,9 @@
 
 {% block body %}
 
-	{# Section de la photo de la boutique sous la navigation #}
+	{# la photo de la boutique #}
 	<div
 		class="container-fluid my-5">
-		<!-- Ajout de my-5 ici pour espacer le haut -->
 		<div class="row">
 			<div class="col px-4">
 				<img src="{{ asset('uploads/boutique/boutique.jpg') }}" alt="Boutique" class="img-fluid mx-auto d-block" style="max-height: 1000px;">
@@ -16,10 +15,9 @@
 		</div>
 	</div>
 
-	{# Section "Qui sommes-nous?" #}
+	{#  "Qui sommes-nous?" #}
 	<div
 		class="container py-5 my-5">
-		<!-- Ajout de my-5 ici pour espacer cette section -->
 		<div class="d-flex">
 			<div class="col-md-5 text-center mb-4 mb-md-0">
 				<img src="{{ asset('uploads/profilpicture/photo_profil.jpg') }}" alt="Profil" class="img-fluid rounded-circle" style="width: 300px;">
@@ -49,9 +47,9 @@
 	        </div>
 	    </div> #}
 
-    {# Affichage des catégories à gauche et des produits à droite #}
+    {# Affichage des catégories #}
     <div
-    id="products-section" class="container my-5"> <!-- Ajout de my-5 ici pour espacer cette section -->
+    id="products-section" class="container my-5"> 
         <div class="row">
             <div
                 class="col-md-4 mb-5">
@@ -63,6 +61,7 @@
                     {% endfor %}
                 </ul>
             </div>
+			{# Affichage des products #}
             <div class="col-md-8">
                 <div class="row">
                     {% for product in products %}
@@ -81,7 +80,7 @@
                     {% endfor %}
                 </div>
                 <div class="navigation my-5">
-                    <!-- Ajout de my-5 ici pour espacer cette section -->
+
                     {{ knp_pagination_render(products) }}
                 </div>
             </div>
@@ -99,7 +98,6 @@
 							<p class="card-text">{{ comment.content }}</p>
 							<footer class="blockquote-footer">{{ comment.user.firstname }}
 								{{ comment.user.name }} 
-								{# {{ comment.date|date('d/m/Y H:i') }}  DATE DU COMMENTAIRE JE SAIS PAS SI JE L'AFFICHE OU PAS#}
 								</footer>
 						</div>
 					</div>

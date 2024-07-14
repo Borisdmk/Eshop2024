@@ -47,7 +47,6 @@ class CartController extends AbstractController
     #[Route('/cart/{idProduct}', name: 'app_cart_add', methods: ['POST', 'GET'])]
     public function addProduct(Request $request, ProductRepository $productRepository, int $idProduct): Response
     {
-
         // créer la session
         $session = $request->getSession();
         // $cart = $session->get('cart', []); // permet de videt la session et d'en relancer une
@@ -64,9 +63,7 @@ class CartController extends AbstractController
                 "priceIdStripe" => [],  
             ]);
         }
-
         $cart = $session->get('cart');
-
         // ajouter le produit au panier
         // recupérer les infos du produit en BDD et l'ajouter a mon panier
         $product = $productRepository->find($idProduct);
@@ -87,9 +84,7 @@ class CartController extends AbstractController
         for($i = 0; $i < count($session->get('cart')['id']); $i++) {
             $cartTotal += (float) $session->get('cart')["price"][$i] * $session->get('cart')["quantity"][$i];
         }
-
         // afficher la page panier
-
         return $this->render('cart/index.html.twig', [
             'cartItems' => $session->get('cart'),
             'cartTotal' => $cartTotal,
